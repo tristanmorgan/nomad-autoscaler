@@ -10,7 +10,7 @@
 
 # devbuild compiles the binary
 # -----------------------------------
-FROM golang:1.24 AS devbuild
+FROM golang:1.24-alpine AS devbuild
 
 # Disable CGO to make sure we build static binaries
 ENV CGO_ENABLED=0
@@ -18,7 +18,7 @@ ENV CGO_ENABLED=0
 # Escape the GOPATH
 WORKDIR /build
 COPY . ./
-RUN go build -o nomad-autoscaler .
+RUN go build -trimpath -o nomad-autoscaler .
 
 # dev runs the binary from devbuild
 # -----------------------------------
